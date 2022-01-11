@@ -62,7 +62,7 @@ const config = {
           'css-loader',
           'sass-loader',
         ],
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
