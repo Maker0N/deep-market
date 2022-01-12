@@ -9,9 +9,7 @@ const AuthReg = () => {
     login: null,
     password: null,
   })
-  const [correctAuth, setCorrectAuth] = useState({})
-
-  console.log(auth, correctAuth)
+  // const [correctAuth, setCorrectAuth] = useState({})
 
   const labelLogin = 'LOGIN'
   const labelPass = 'PASSWORD'
@@ -27,11 +25,11 @@ const AuthReg = () => {
     setAuth({ ...auth, password: target })
   }
 
-  const saveCorrectAuth = (authObj) => {
-    if (allowAuth.login === auth.login && allowAuth.password === auth.password) {
-      setCorrectAuth(authObj)
-    }
-  }
+  // const saveCorrectAuth = (authObj) => {
+  //   if (allowAuth.login === auth.login && allowAuth.password === auth.password) {
+  //     setCorrectAuth(authObj)
+  //   }
+  // }
 
   return (
     <div className="d-flex justify-content-center align-items-center">
@@ -51,17 +49,18 @@ const AuthReg = () => {
               descript={descriptPass}
               getInput={(target) => changePass(target)}
             />
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center mt-3">
               <Link to={allowAuth.login === auth.login && allowAuth.password === auth.password
                 ? '/' : '/auth'}
               >
                 <Button
                   buttonName={buttonLogin}
-                  buttonAction={(authObj) => saveCorrectAuth(authObj)}
+                  // buttonAction={(authObj) => saveCorrectAuth(authObj)}
                   auth={auth}
                 />
               </Link>
             </div>
+            <div className="d-flex justify-content-center mt-3">Registration</div>
           </form>
         </div>
       </div>

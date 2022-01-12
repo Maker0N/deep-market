@@ -6,7 +6,7 @@ const Button = ({
 }) => (
   <button
     type="button"
-    className="btn btn-primary btn-sm mt-3"
+    className="btn btn-primary btn-sm"
     onClick={() => buttonAction(auth)}
   >
     {buttonName}
