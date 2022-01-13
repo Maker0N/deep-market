@@ -6,10 +6,9 @@ import allowAuth from '../../base/auth'
 
 const AuthReg = () => {
   const [auth, setAuth] = useState({
-    login: null,
-    password: null,
+    login: '',
+    password: '',
   })
-  // const [correctAuth, setCorrectAuth] = useState({})
 
   const labelLogin = 'LOGIN'
   const labelPass = 'PASSWORD'
@@ -17,19 +16,9 @@ const AuthReg = () => {
   const descriptPass = 'Your password must be 8-20 characters long.'
   const buttonLogin = 'Login'
 
-  const changeLogin = (target) => {
-    setAuth({ ...auth, login: target })
+  const changeAuthInput = ({ target }) => {
+    setAuth((prev) => ({ ...prev, [target.name]: target.value }))
   }
-
-  const changePass = (target) => {
-    setAuth({ ...auth, password: target })
-  }
-
-  // const saveCorrectAuth = (authObj) => {
-  //   if (allowAuth.login === auth.login && allowAuth.password === auth.password) {
-  //     setCorrectAuth(authObj)
-  //   }
-  // }
 
   return (
     <div className="d-flex justify-content-center align-items-center">
@@ -42,12 +31,18 @@ const AuthReg = () => {
             <Input
               label={labelLogin}
               descript={descriptLogin}
-              getInput={(target) => changeLogin(target)}
+              name="login"
+              value={auth.login}
+              placeholder="login"
+              getInput={(target) => changeAuthInput(target)}
             />
             <Input
               label={labelPass}
               descript={descriptPass}
-              getInput={(target) => changePass(target)}
+              name="password"
+              value={auth.password}
+              placeholder="password"
+              getInput={(target) => changeAuthInput(target)}
             />
             <div className="d-flex justify-content-center mt-3">
               <Link to={allowAuth.login === auth.login && allowAuth.password === auth.password
@@ -55,7 +50,6 @@ const AuthReg = () => {
               >
                 <Button
                   buttonName={buttonLogin}
-                  // buttonAction={(authObj) => saveCorrectAuth(authObj)}
                   auth={auth}
                 />
               </Link>

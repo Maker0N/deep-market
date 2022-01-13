@@ -7,6 +7,9 @@ const Market = () => {
   const [products, setProducts] = useState()
   const [cropProductsCategory, setCropProdactsCategory] = useState([])
   const [categoryName, setCategoryName] = useState('')
+  const [search, setSearch] = useState('')
+  const [searchResult, setSearchResult] = useState([])
+
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then((res) => res.json())
@@ -14,7 +17,6 @@ const Market = () => {
   }, [])
 
   let categories
-
   if (products) {
     categories = products
       .map((prod) => prod.category)
@@ -27,15 +29,59 @@ const Market = () => {
     setCategoryName(cat)
   }
 
+  const handleAllAssortment = () => {
+    setCategoryName('')
+  }
+
   const buttonSearch = 'Search'
+  const onSearch = ({ target }) => {
+    setSearch(target.value)
+  }
+
+  const clearInput = () => {
+    setSearch('')
+  }
+
+  const handleSearch = () => {
+    if (products) {
+      const searchProducts = products.filter((it) => it.title.toLowerCase().includes(search))
+      setSearchResult(searchProducts)
+      setCategoryName('Search Result')
+      clearInput()
+    }
+  }
+
+  const handleSortUp = () => {
+    if (products) {
+      const min = products.sort((a, b) => a.price - b.price)
+      setProducts(min)
+      setCategoryName('min->max')
+    }
+  }
+
+  const handleSortDown = () => {
+    if (products) {
+      const max = products.sort((a, b) => b.price - a.price)
+      setProducts(max)
+      setCategoryName('max->min')
+    }
+  }
+
   return (
     <>
       <form className="d-flex mx-3">
         <div className="d-flex w-100">
-          <Input />
+          <Input
+            getInput={onSearch}
+            name="search"
+            value={search}
+            label=""
+            descript=""
+            placeholder="Search area"
+          />
         </div>
         <div className="ms-1">
-          <Button buttonName={buttonSearch} />
+          <Button buttonName={buttonSearch} buttonAction={handleSearch} />
         </div>
       </form>
       <div className="badge bg-primary mx-3">Market</div>
@@ -59,13 +105,55 @@ const Market = () => {
               ))
               : <div>Loading...</div>}
           </ul>
+          <div className="d-flex justify-content-center">
+            <button
+              type="button"
+              className="border-0"
+              onClick={() => handleAllAssortment()}
+            >
+              All assortment
+            </button>
+          </div>
         </nav>
         <div className="w-75">
-          <div className="bg-light ms-1">Sort</div>
+          <div className="bg-light ms-1">
+            <button
+              type="button"
+              className="border-0"
+              onClick={() => handleSortUp()}
+            >
+              Sort by price down
+            </button>
+            <button
+              type="button"
+              className="border-0"
+              onClick={() => handleSortDown()}
+            >
+              Sort by price up
+            </button>
+          </div>
           <section className="bg-light ms-1 mt-1">
             {!categoryName
               ? <div className="d-flex justify-content-center">All assortment</div>
               : <div className="d-flex justify-content-center">{categoryName}</div>}
+
+            {products && categoryName === 'Search Result'
+              ? searchResult.map((item) => (
+                <article key={item.id}><ItemCard item={item} /></article>
+              ))
+              : null}
+
+            {categoryName === 'min->max'
+              ? products.map((item) => (
+                <article key={item.id}><ItemCard item={item} /></article>
+              ))
+              : null}
+            {categoryName === 'max->min'
+              ? products.map((item) => (
+                <article key={item.id}><ItemCard item={item} /></article>
+              ))
+              : null}
+
             {!categoryName && products
               ? products.map((item) => (
                 <article key={item.id}><ItemCard item={item} /></article>
@@ -80,4 +168,4 @@ const Market = () => {
   )
 }
 
-export default Market;
+export default Market
