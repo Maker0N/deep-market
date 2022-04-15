@@ -13,9 +13,13 @@ const Button = ({
   </button>
 )
 
+Button.defaultProps = {
+  buttonAction: undefined,
+}
+
 Button.propTypes = {
   buttonName: PropTypes.string.isRequired,
-  buttonAction: PropTypes.func.isRequired,
+  buttonAction: PropTypes.func,
   // arg: PropTypes.any.isRequired,
 }
 
