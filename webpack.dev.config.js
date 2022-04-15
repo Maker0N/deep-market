@@ -2,6 +2,7 @@ const { resolve } = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const NodemonPlugin = require('nodemon-webpack-plugin')
 // eslint-disable-next-line import/no-extraneous-dependencies
 // const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -25,7 +26,7 @@ const config = {
       directory: resolve(__dirname, 'dist'),
     },
     // contentBase: resolve(__dirname, 'dist'),
-    port: 8080,
+    port: 3000,
     host: 'localhost',
     // index: 'index.html',
     client: {
@@ -92,6 +93,7 @@ const config = {
       ],
     }),
     new CleanWebpackPlugin(),
+    [new NodemonPlugin()],
   ],
 }
 
