@@ -93,7 +93,7 @@ const config = {
       ],
     }),
     new CleanWebpackPlugin(),
-    [new NodemonPlugin()],
+    new NodemonPlugin(),
   ],
 }
 
