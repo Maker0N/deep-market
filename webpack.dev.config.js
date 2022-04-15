@@ -2,6 +2,7 @@ const { resolve } = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const NodemonPlugin = require('nodemon-webpack-plugin')
 // eslint-disable-next-line import/no-extraneous-dependencies
 // const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -92,6 +93,7 @@ const config = {
       ],
     }),
     new CleanWebpackPlugin(),
+    [new NodemonPlugin()],
   ],
 }
 
