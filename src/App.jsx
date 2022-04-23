@@ -11,7 +11,7 @@ const App = () => (
   <>
     <Header />
     <Switch>
-      <Route path="/auth" component={AuthReg} />
+      <Route path="/auth/:loginOrReg" component={AuthReg} />
       <Route path="/cart" component={Cart} />
       <Route path="/product" component={Product} />
       <Route path="/admin" component={Admin} />

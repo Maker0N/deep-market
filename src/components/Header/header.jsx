@@ -14,7 +14,7 @@ const Header = () => (
         <Link to="/cart" className="nav-link">Cart</Link>
       </li>
       <li className="nav-item">
-        <Link to="/auth" className="nav-link">Login</Link>
+        <Link to="/auth/login" className="nav-link">Login</Link>
       </li>
       <li className="nav-item">
         <Link to="/auth" className="nav-link disabled">Disabled</Link>
