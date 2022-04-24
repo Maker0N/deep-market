@@ -50,6 +50,9 @@ crashlytics-build.properties
 # NodeJS modules folder
 node_modules
 
+#config
+config
+
 # npm debug log
 npm-debug.log
 
