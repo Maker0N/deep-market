@@ -81,7 +81,7 @@ const Market = () => {
           />
         </div>
         <div className="ms-1">
-          <Button buttonName={buttonSearch} buttonAction={handleSearch} />
+          <Button buttonClass="btn btn-primary" buttonName={buttonSearch} buttonAction={handleSearch} />
         </div>
       </form>
       <div className="badge bg-primary mx-3">Market</div>

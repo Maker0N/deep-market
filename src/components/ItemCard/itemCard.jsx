@@ -16,7 +16,7 @@ const ItemCard = ({ item }) => (
             <small className="text-muted">
               {`Price: ${item.price} $`}
             </small>
-            <Button buttonName="See product" />
+            <Button buttonClass="btn btn-primary" buttonName="See product" />
           </div>
         </div>
       </div>
