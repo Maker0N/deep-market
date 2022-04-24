@@ -100,7 +100,7 @@ router.post('/token', async (req, res) => {
     const data = tokenService.validateRefresh(refreshToken)
     const dbToken = await tokenService.findToken(refreshToken)
     if (!data || !dbToken || data._id !== dbToken?.user?.toString()) {
-      return res.status(401).json({ message: 'Unautorized!' })
+      return res.status(401).json({ message: 'Unauthorized!' })
     }
     const tokens = tokenService.generate({ _id: data._id.toString() })
     await tokenService.save(data._id, tokens.refreshToken)
