@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Button = ({
-  buttonName, buttonAction,
+  buttonName, buttonAction, buttonClass,
 }) => (
   <button
     type="button"
-    className="btn btn-primary btn-sm"
-    onClick={() => buttonAction()}
+    className={buttonClass}
+    onClick={buttonAction}
   >
     {buttonName}
   </button>
@@ -20,6 +20,7 @@ Button.defaultProps = {
 Button.propTypes = {
   buttonName: PropTypes.string.isRequired,
   buttonAction: PropTypes.func,
+  buttonClass: PropTypes.string.isRequired,
   // arg: PropTypes.any.isRequired,
 }
 
