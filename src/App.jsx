@@ -13,7 +13,7 @@ const App = () => (
     <Switch>
       <Route path="/auth/:loginOrReg" component={AuthReg} />
       <Route path="/cart" component={Cart} />
-      <Route path="/product" component={Product} />
+      <Route path="/product/:itemId" component={Product} />
       <Route path="/admin" component={Admin} />
       <Route path="/" component={Market} />
     </Switch>

@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Input from '../Input/input'
 import Button from '../Button/button'
 import ItemCard from '../ItemCard/itemCard'
@@ -11,10 +13,16 @@ const Market = () => {
   const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((res) => res.json())
-      .then((json) => setProducts(json))
+    axios.get('http://localhost:8080/api/products')
+      .then((res) => res.data)
+      .then((data) => setProducts(data))
   }, [])
+
+  // useEffect(() => {
+  //   fetch('https://fakestoreapi.com/products')
+  //     .then((res) => res.json())
+  //     .then((json) => setProducts(json))
+  // }, [])
 
   let categories
   if (products) {
@@ -72,12 +80,16 @@ const Market = () => {
       <form className="d-flex mx-3">
         <div className="d-flex w-100">
           <Input
+            type="input"
             getInput={onSearch}
             name="search"
             value={search}
             label=""
             descript=""
             placeholder="Search area"
+            descriptclass=""
+            inputClass="form-control form-control-sm"
+            labelClass=""
           />
         </div>
         <div className="ms-1">
@@ -116,7 +128,7 @@ const Market = () => {
           </div>
         </nav>
         <div className="w-75">
-          <div className="bg-light ms-1">
+          <div className="d-flex justify-content-between bg-light ms-1">
             <button
               type="button"
               className="border-0"
@@ -139,27 +151,37 @@ const Market = () => {
 
             {products && categoryName === 'Search Result'
               ? searchResult.map((item) => (
-                <article key={item.id}><ItemCard item={item} /></article>
+                <article key={item._id}>
+                  <ItemCard item={item} />
+                </article>
               ))
               : null}
 
             {categoryName === 'min->max'
               ? products.map((item) => (
-                <article key={item.id}><ItemCard item={item} /></article>
+                <article key={item._id}>
+                  <ItemCard item={item} />
+                </article>
               ))
               : null}
             {categoryName === 'max->min'
               ? products.map((item) => (
-                <article key={item.id}><ItemCard item={item} /></article>
+                <article key={item._id}>
+                  <ItemCard item={item} />
+                </article>
               ))
               : null}
 
             {!categoryName && products
               ? products.map((item) => (
-                <article key={item.id}><ItemCard item={item} /></article>
+                <article key={item._id}>
+                  <ItemCard item={item} />
+                </article>
               ))
               : cropProductsCategory.map((item) => (
-                <article key={item.id}><ItemCard item={item} /></article>
+                <article key={item._id}>
+                  <ItemCard item={item} />
+                </article>
               ))}
           </section>
         </div>

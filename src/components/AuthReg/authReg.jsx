@@ -41,39 +41,54 @@ const AuthReg = () => {
         <div className="d-flex justify-content-center">
           <form className="mw-100">
             <Input
+              type="input"
               label={labelLogin}
               descript={descriptLogin}
               name="login"
               value={auth.login}
               placeholder="login"
+              inputClass="form-control form-control-sm"
+              labelClass="fs-4 form-label mt-2"
+              descriptclass="fs-6 text-descript text-muted"
               getInput={(target) => changeAuthInput(target)}
             />
             <Input
+              type="input"
               label={labelPass}
               descript={descriptPass}
               name="password"
               value={auth.password}
               placeholder="password"
+              inputClass="form-control form-control-sm"
+              labelClass="fs-4 form-label mt-2"
+              descriptclass="fs-6 text-descript text-muted"
               getInput={(target) => changeAuthInput(target)}
             />
             {loginOrReg === 'signin'
               && (
                 <>
                   <Input
+                    type="input"
                     label="Your name"
                     descript="Enter your name."
                     name="name"
                     value={auth.name}
                     placeholder="name"
+                    inputClass="form-control form-control-sm"
+                    labelClass="fs-4 form-label mt-2"
                     getInput={(target) => changeAuthInput(target)}
+                    descriptclass="fs-6 text-descript text-muted"
                   />
-                  <div className="d-flex justify-content-center mt-3">
+                  <div className="d-flex justify-content-center flex-column mt-3">
                     <img
                       className="img-thumbnail"
                       src={avatar}
                       alt="ava"
                       onClick={handleImage}
                     />
+                    <div className="d-flex justify-content-center">
+                      <p className="text-muted">Tap to choise avatar</p>
+                    </div>
                   </div>
                 </>
               )}

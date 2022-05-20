@@ -2,8 +2,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Input = ({
-  type, label, descript, value, name, getInput, inputClass, labelClass, descriptclass,
+const Textarea = ({
+  label, descript, value, name, getInput, inputClass, labelClass, descriptclass,
 }) => (
   <>
     <label
@@ -12,17 +12,15 @@ const Input = ({
     >
       {label}
     </label>
-    <input
-      type={type}
+    <textarea
       id={label}
       value={value}
       name={name}
       className={inputClass}
       placeholder={name}
+      rows="3"
       aria-describedby={label}
       autoComplete="off"
-      descriptclass={descriptclass}
-      descript={descript}
       onChange={(e) => {
         getInput(e)
       }}
@@ -33,17 +31,15 @@ const Input = ({
   </>
 )
 
-Input.propTypes = {
-  type: PropTypes.string.isRequired,
+Textarea.propTypes = {
   label: PropTypes.string.isRequired,
   descript: PropTypes.string.isRequired,
   getInput: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  // placeholder: PropTypes.string.isRequired,
   inputClass: PropTypes.string.isRequired,
   labelClass: PropTypes.string.isRequired,
   descriptclass: PropTypes.string.isRequired,
 }
 
-export default Input
+export default Textarea

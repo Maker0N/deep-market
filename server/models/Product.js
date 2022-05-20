@@ -10,6 +10,8 @@ const schema = new Schema({
     rate: { type: Number, required: true },
     count: { type: Number, required: true },
   },
+  rate: { type: Number, required: true },
+  count: { type: Number, required: true },
 }, {
   timestamps: { createdAt: 'created_at' },
 })

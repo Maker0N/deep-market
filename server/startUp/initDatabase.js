@@ -23,7 +23,7 @@ async function createInitialEntity(Model, data) {
 module.exports = async () => {
   const products = await Product.find()
   const productsMock = await getMockData()
-  if (products.length !== productsMock.length) {
+  if (!products.length) {
     await createInitialEntity(Product, productsMock)
   }
 }
