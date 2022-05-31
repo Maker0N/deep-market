@@ -4,12 +4,12 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator')
 const User = require('../models/User')
-const { generateUserData } = require('../utils/helpers')
 const tokenService = require('../services/token.service')
+// const tokenMiddleware = require('../middleware/token.middleware')
 
 const router = express.Router({ mergeParams: true })
 
-router.post('/signIn', [
+router.post('/signUp', [
   check('login', 'Incorrect login (email)').isEmail(),
   check('password', 'The minimum password length must be 8 characters').isLength({ min: 8 }),
   async (req, res) => {
@@ -36,7 +36,6 @@ router.post('/signIn', [
       }
       const hashedPassword = await bcrypt.hash(password, 12)
       const newUser = await User.create({
-        ...generateUserData(),
         ...req.body,
         password: hashedPassword,
       })
@@ -96,7 +95,7 @@ router.post('/logIn', [
 
 router.post('/token', async (req, res) => {
   try {
-    const { refresh_token: refreshToken } = req.body
+    const { refreshToken } = req.body
     const data = tokenService.validateRefresh(refreshToken)
     const dbToken = await tokenService.findToken(refreshToken)
     if (!data || !dbToken || data._id !== dbToken?.user?.toString()) {

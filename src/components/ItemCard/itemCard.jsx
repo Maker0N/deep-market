@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../Button/button'
@@ -11,12 +12,12 @@ const ItemCard = ({ item }) => (
       <div className="col-md-10">
         <div className="card-body">
           <h5 className="card-title">{item.title}</h5>
-          <p className="card-text"><small className="text-muted">{`ID: ${item.id}`}</small></p>
+          <p className="card-text"><small className="text-muted">{`ID: ${item._id}`}</small></p>
           <div className="d-flex justify-content-between card-text">
             <small className="text-muted">
               {`Price: ${item.price} $`}
             </small>
-            <Button buttonName="See product" />
+            <Button buttonClass="btn btn-primary" buttonName="See product" />
           </div>
         </div>
       </div>

@@ -1,21 +1,30 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import Input from '../Input/input'
 import Button from '../Button/button'
-import allowAuth from '../../base/auth'
 import { generateUserData } from '../../utils/helpers'
+import { loggedUser } from '../../redux/authReducer'
+import httpService from '../../services/http.service'
+import 'react-toastify/dist/ReactToastify.css'
 
 const AuthReg = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
   const { loginOrReg } = useParams()
   const [auth, setAuth] = useState({
     login: '',
     password: '',
     name: '',
-    avatar: '',
+    avatar: 'https://avatars.dicebear.com/api/bottts/khkl9.svg',
   })
-  const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/bottts/khkl9.svg')
+
+  const userEndPoint = '/user/'
 
   const labelLogin = 'Login (email)'
   const labelPass = 'Password'
@@ -23,13 +32,54 @@ const AuthReg = () => {
   const descriptPass = 'Your password must be 8-20 characters long.'
   const buttonLogin = 'Login'
 
+  const clearAuth = () => {
+    setAuth({
+      login: '',
+      password: '',
+      name: '',
+      avatar: 'https://avatars.dicebear.com/api/bottts/khkl9.svg',
+    })
+  }
+
   const changeAuthInput = ({ target }) => {
     setAuth((prev) => ({ ...prev, [target.name]: target.value }))
   }
 
   const handleImage = () => {
     const avatarSrc = generateUserData().image
-    setAvatar(avatarSrc)
+    setAuth((prev) => ({ ...prev, avatar: avatarSrc }))
+  }
+
+  const handleSignUp = () => {
+    handleImage()
+    axios.post('http://localhost:8080/api/auth/signUp', auth)
+      .then((res) => res.data)
+      .then((data) => {
+        dispatch(loggedUser(data))
+        httpService.get(`${userEndPoint}/${data.userId}`)
+          .then((res) => res.data)
+          .then((user) => {
+            dispatch(loggedUser({ ...data, ...user }))
+            history.push('/')
+          })
+        clearAuth()
+      })
+    toast('You are registred!')
+  }
+
+  const handleLogIn = () => {
+    axios.post('http://localhost:8080/api/auth/logIn', auth)
+      .then((res) => res.data)
+      .then((data) => {
+        dispatch(loggedUser(data))
+        httpService.get(`${userEndPoint}/${data.userId}`)
+          .then((res) => res.data)
+          .then((user) => {
+            dispatch(loggedUser({ ...data, ...user }))
+            history.push('/')
+          })
+      })
+    toast('You are loggedIn!')
   }
 
   return (
@@ -70,7 +120,7 @@ const AuthReg = () => {
                   <div className="d-flex justify-content-center mt-3">
                     <img
                       className="img-thumbnail"
-                      src={avatar}
+                      src={auth.avatar}
                       alt="ava"
                       onClick={handleImage}
                     />
@@ -78,9 +128,7 @@ const AuthReg = () => {
                 </>
               )}
             <div className="d-flex justify-content-center mt-3">
-              <Link to={allowAuth.login === auth.login && allowAuth.password === auth.password
-                ? '/' : '/auth/login'}
-              >
+              <>
                 {loginOrReg === 'login'
                 && (
                 <Button
@@ -89,9 +137,10 @@ const AuthReg = () => {
                   buttonClass={loginOrReg === 'login'
                     ? 'btn btn-primary btn-sm'
                     : 'btn btn-secondary btn-sm'}
+                  buttonAction={handleLogIn}
                 />
                 )}
-              </Link>
+              </>
             </div>
             <div className="d-flex justify-content-center mt-3">
               <Link to="/auth/signin">
@@ -101,10 +150,14 @@ const AuthReg = () => {
                   buttonClass={loginOrReg === 'login'
                     ? 'btn btn-secondary btn-sm'
                     : 'btn btn-primary btn-sm'}
+                  buttonAction={loginOrReg === 'login'
+                    ? null
+                    : handleSignUp}
                 />
               </Link>
             </div>
           </form>
+          <ToastContainer />
         </div>
       </div>
     </div>

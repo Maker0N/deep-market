@@ -1,13 +1,14 @@
 const express = require('express')
-const Product = require('../models/Product')
+const User = require('../models/User')
 const auth = require('../middleware/auth.middleware')
 
 const router = express.Router({ mergeParams: true })
 
-router.get('/', auth, async (req, res) => {
+router.get('/:userId', auth, async (req, res) => {
   try {
-    const list = await Product.find()
-    res.status(200).send(list)
+    const { userId } = req.params
+    const user = await User.findById(userId)
+    res.send(user)
   } catch (error) {
     res.status(500).json({
       message: 'Error on server. Try leter',

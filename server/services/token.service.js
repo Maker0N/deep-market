@@ -3,12 +3,12 @@ const config = require('config')
 const Token = require('../models/Token')
 
 function generate(payload) {
-  const accessToken = jwt.sign(payload, config.get('accessSecret'), { expiresIn: '1h' })
+  const accessToken = jwt.sign(payload, config.get('accessSecret'), { expiresIn: '1m' })
   const refreshToken = jwt.sign(payload, config.get('refreshSecret'))
   return {
     accessToken,
     refreshToken,
-    expiresIn: 3600,
+    expiresIn: 60,
   }
 }
 
@@ -18,8 +18,16 @@ async function save(user, refreshToken) {
     data.refreshToken = refreshToken
     return data.save()
   }
-  const token = Token.create({ user, refreshToken })
+  const token = await Token.create({ user, refreshToken })
   return token
+}
+
+function validateAccess(accessToken) {
+  try {
+    return jwt.verify(accessToken, config.get('accessSecret'))
+  } catch (error) {
+    return null
+  }
 }
 
 function validateRefresh(refreshToken) {
@@ -41,6 +49,7 @@ async function findToken(refreshToken) {
 const tokenService = {
   generate,
   save,
+  validateAccess,
   validateRefresh,
   findToken,
 }

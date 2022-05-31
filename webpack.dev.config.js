@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const config = {
   devtool: 'source-map',
-  entry: './src/index.jsx',
+  entry: ['regenerator-runtime/runtime', './src/index.jsx'],
   mode: 'development',
   output: {
     filename: 'js/[name].[contenthash].js',
