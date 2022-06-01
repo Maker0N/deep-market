@@ -91,12 +91,16 @@ const Market = () => {
             <form className="d-flex mx-3 mt-2">
               <div className="d-flex w-100">
                 <Input
+                  type="text"
                   getInput={onSearch}
                   name="search"
                   value={search}
                   label=""
                   descript=""
                   placeholder="Search area"
+                  descriptclass=""
+                  inputClass="form-control form-control-sm"
+                  labelClass=""
                 />
               </div>
               <div className="ms-1">

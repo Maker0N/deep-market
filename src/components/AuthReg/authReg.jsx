@@ -91,7 +91,7 @@ const AuthReg = () => {
         <div className="d-flex justify-content-center">
           <form className="mw-100">
             <Input
-              type="input"
+              type="text"
               label={labelLogin}
               descript={descriptLogin}
               name="login"
@@ -103,7 +103,7 @@ const AuthReg = () => {
               getInput={(target) => changeAuthInput(target)}
             />
             <Input
-              type="input"
+              type="password"
               label={labelPass}
               descript={descriptPass}
               name="password"
@@ -118,7 +118,7 @@ const AuthReg = () => {
               && (
                 <>
                   <Input
-                    type="input"
+                    type="text"
                     label="Your name"
                     descript="Enter your name."
                     name="name"
@@ -130,19 +130,22 @@ const AuthReg = () => {
                     descriptclass="fs-6 text-descript text-muted"
                   />
                   <div className="d-flex justify-content-center flex-column mt-3">
-                    <img
-                      className="img-thumbnail"
-                      src={auth.avatar}
-                      alt="ava"
-                      onClick={handleImage}
-                    />
+                    <div className="d-flex justify-content-center">
+                      <img
+                        className="img-thumbnail"
+                        src={auth.avatar}
+                        alt="ava"
+                        onClick={handleImage}
+                        style={{ width: '150px' }}
+                      />
+                    </div>
                     <div className="d-flex justify-content-center">
                       <p className="text-muted">Tap to choise avatar</p>
                     </div>
                   </div>
                 </>
               )}
-            <div className="d-flex justify-content-center mt-3">
+            <div className="d-flex justify-content-center mt-1">
               <>
                 {loginOrReg === 'login'
                 && (
@@ -157,7 +160,7 @@ const AuthReg = () => {
                 )}
               </>
             </div>
-            <div className="d-flex justify-content-center mt-3">
+            <div className="d-flex justify-content-center mt-1">
               <Link to="/auth/signin">
                 <Button
                   buttonName="Registration"
