@@ -1,21 +1,27 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Header from './components/Header/header'
-// import Market from './components/Market/market'
-// import Product from './components/Product/product'
+import Market from './components/Market/market'
+import Product from './components/Product/product'
 import Cart from './components/Cart/cart'
-// import AuthReg from './components/AuthReg/authReg'
-// import Admin from './components/Admin/admin'
+import AuthReg from './components/AuthReg/authReg'
+import Admin from './components/Admin/admin'
 
 const App = () => (
   <>
     <Header />
     <Switch>
-      {/* <Route path="/auth" component={AuthReg} /> */}
+      <Route path="/auth/:loginOrReg" component={AuthReg} />
+      <Route path="/auth/login" component={AuthReg} />
       <Route path="/cart" component={Cart} />
-      {/* <Route path="/product" component={Product} /> */}
-      {/* <Route path="/admin" component={Admin} /> */}
-      {/* <Route path="/" component={Market} /> */}
+      <Route path="/product/:itemId" component={Product} />
+      <Route path="/admin" component={Admin} />
+      <Route
+        path="/"
+        render={() => (
+          <Market />
+        )}
+      />
     </Switch>
   </>
 )
