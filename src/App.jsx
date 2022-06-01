@@ -12,10 +12,16 @@ const App = () => (
     <Header />
     <Switch>
       <Route path="/auth/:loginOrReg" component={AuthReg} />
+      <Route path="/auth/login" component={AuthReg} />
       <Route path="/cart" component={Cart} />
       <Route path="/product/:itemId" component={Product} />
       <Route path="/admin" component={Admin} />
-      <Route path="/" component={Market} />
+      <Route
+        path="/"
+        render={() => (
+          <Market />
+        )}
+      />
     </Switch>
   </>
 )

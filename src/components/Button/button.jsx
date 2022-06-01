@@ -7,7 +7,7 @@ const Button = ({
   <button
     type="button"
     className={buttonClass}
-    onClick={buttonAction}
+    onClick={() => buttonAction()}
   >
     {buttonName}
   </button>
