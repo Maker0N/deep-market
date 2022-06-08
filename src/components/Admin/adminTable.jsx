@@ -14,7 +14,6 @@ const AdminTable = () => {
   }, [])
 
   const handleDelete = (id) => {
-    console.log(id)
     axios.delete(`http://localhost:8080/api/products/delete/${id}`)
   }
 

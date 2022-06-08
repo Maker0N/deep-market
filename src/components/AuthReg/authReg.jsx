@@ -60,9 +60,11 @@ const AuthReg = () => {
           .then((res) => res.data)
           .then((user) => {
             dispatch(loggedUser({ ...data, ...user }))
-            history.push('/')
           })
-        clearAuth()
+        setTimeout(() => {
+          history.push('/')
+          clearAuth()
+        }, 4700)
       })
     toast('You are registred!')
   }
@@ -76,10 +78,12 @@ const AuthReg = () => {
           .then((res) => res.data)
           .then((user) => {
             dispatch(loggedUser({ ...data, ...user }))
-            history.push('/')
           })
+        setTimeout(() => {
+          history.push('/')
+        }, 4700)
       })
-    toast('You are loggedIn!')
+    toast('You are logged in!')
   }
 
   return (

@@ -60,7 +60,8 @@ const Market = () => {
 
   const handleSearch = () => {
     if (products) {
-      const searchProducts = products.filter((it) => it.title.toLowerCase().includes(search))
+      const searchProducts = products.filter((it) => it.title
+        .toLowerCase().includes(search.toLowerCase()))
       setSearchResult(searchProducts)
       setCategoryName('Search Result')
       clearInput()

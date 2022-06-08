@@ -1,11 +1,22 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Button from '../Button/button'
+import { addItemToCart } from '../../redux/cartReducer'
 
 const ItemCard = ({ item }) => {
+  const dispatch = useDispatch()
   const location = useLocation()
+  const { cart } = useSelector((s) => s.cartReducer)
+
+  const [cartItem] = cart.filter((it) => it._id === item._id)
+
+  const handleBuyItem = () => {
+    dispatch(addItemToCart(item))
+  }
+
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -35,21 +46,46 @@ const ItemCard = ({ item }) => {
                   {' | '}
                   Rating:
                   {' '}
-                  {item.rating.rate}
+                  {item.rate}
                   {' | '}
                   Count:
                   {' '}
-                  {item.rating.count}
+                  {item.count}
                 </small>
               </div>
               )}
-            <div className="d-flex justify-content-between card-text">
-              <h5 className="card-title mt-2">{`Price: ${item.price} $`}</h5>
+            <div className="d-flex justify-content-between card-text mt-2">
+              <div className="d-flex flex-row">
+                <h5 className="card-title mt-2">{`Price: ${item.price} $`}</h5>
+                {location.pathname === `/product/${item._id}`
+                  && (
+                  <Button
+                    buttonClass="btn btn-primary ms-2"
+                    buttonName="Buy"
+                    buttonAction={handleBuyItem}
+                  />
+                  )}
+                {cartItem
+                  ? (
+                    <h5 className="card-title mt-2 ms-3">
+                      |
+                      {' '}
+                      <div className="badge bg-danger ms-2">{`${cartItem.quant} pcs.`}</div>
+                    </h5>
+                  )
+                  : (
+                    <h5 className="card-title mt-2 ms-3">
+                      |
+                      {' '}
+                      <div className="badge bg-danger ms-2">0 pcs.</div>
+                    </h5>
+                  )}
+              </div>
               <Link to={location.pathname === `/product/${item._id}` ? '/' : `/product/${item._id}`}>
                 <Button
                   buttonClass="btn btn-primary"
                   buttonName={location.pathname === `/product/${item._id}` ? 'Back' : 'See product'}
-                  buttonAction={null}
+                  buttonAction={() => {}}
                 />
               </Link>
             </div>
@@ -60,11 +96,19 @@ const ItemCard = ({ item }) => {
   )
 }
 
+ItemCard.defaultProps = {
+  item: undefined,
+}
+
 ItemCard.propTypes = {
   item: PropTypes
     .objectOf(PropTypes
       .oneOfType([PropTypes.number, PropTypes.string, PropTypes
-        .objectOf(PropTypes.number)])).isRequired,
+        .objectOf(PropTypes.number)])),
+  // cart: PropTypes
+  //   .objectOf(PropTypes
+  //     .oneOfType([PropTypes.number, PropTypes.string, PropTypes
+  //       .objectOf(PropTypes.number)])),
 }
 
 export default ItemCard
