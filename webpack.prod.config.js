@@ -1,14 +1,16 @@
 const { resolve } = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const config = {
+  devtool: 'source-map',
   mode: 'production',
-  entry: './src/index.jsx',
+  entry: ['regenerator-runtime/runtime', './src/index.jsx'],
   output: {
     filename: 'js/[name].[contenthash].js',
-    path: resolve(__dirname, 'dist'),
-    publicPath: '',
+    path: resolve(__dirname, 'server/client'),
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -19,8 +21,8 @@ const config = {
   },
   performance: {
     hints: 'warning',
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000,
+    maxEntrypointSize: 51200,
+    maxAssetSize: 51200,
   },
   module: {
     rules: [
@@ -48,7 +50,7 @@ const config = {
           'css-loader',
           'sass-loader',
         ],
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -66,6 +68,14 @@ const config = {
       template: './src/index.html',
       inject: 'body',
     }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: `${__dirname}/src/img`,
+    //       to: 'images',
+    //     },
+    //   ],
+    // }),
     new CleanWebpackPlugin(),
   ],
 }

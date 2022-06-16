@@ -8,12 +8,12 @@ const NodemonPlugin = require('nodemon-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const config = {
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   entry: ['regenerator-runtime/runtime', './src/index.jsx'],
   mode: 'development',
   output: {
     filename: 'js/[name].[contenthash].js',
-    path: resolve(__dirname, 'dist'),
+    path: resolve(__dirname, 'server/client'),
     publicPath: '/',
   },
   resolve: {

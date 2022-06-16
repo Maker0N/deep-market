@@ -15,15 +15,25 @@ const Market = () => {
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
 
-  const [products, setProducts] = useState()
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [categoryName, setCategoryName] = useState('')
 
   const productsEndPoint = '/products'
 
-  useEffect(() => {
-    httpService.get(productsEndPoint)
-      .then((res) => res.data)
-      .then((data) => setProducts(data))
+  useEffect(async () => {
+    const { data } = await httpService.get(productsEndPoint)
+    // .then((res) => {
+    //   console.log(res)
+    //   return res.data
+    // })
+    // .then((data) => {
+    setProducts(data)
+    const categoriesArr = data
+      .map((prod) => prod.category)
+      .reduce((acc, rec) => (acc.includes(rec) ? acc : [...acc, rec]), [])
+    setCategories(categoriesArr)
+    // })
   }, [])
 
   // useEffect(() => {
@@ -32,12 +42,12 @@ const Market = () => {
   //     .then((json) => setProducts(json))
   // }, [])
 
-  let categories
-  if (products) {
-    categories = products
-      .map((prod) => prod.category)
-      .reduce((acc, rec) => (acc.includes(rec) ? acc : [...acc, rec]), [])
-  }
+  // let categories
+  // if (products.length) {
+  //   categories = products
+  //     .map((prod) => prod.category)
+  //     .reduce((acc, rec) => (acc.includes(rec) ? acc : [...acc, rec]), [])
+  // }
 
   const handleCategory = (cat) => {
     const crop = products.filter((cropCategory) => cropCategory.category === cat)
@@ -84,6 +94,7 @@ const Market = () => {
     }
   }
 
+  // if (products) {
   return (
     <>
       {isLogged
@@ -115,7 +126,7 @@ const Market = () => {
                   Category
                 </div>
                 <ul>
-                  {products
+                  {categories.length
                     ? categories.map((item) => (
                       <li key={item}>
                         <button
@@ -161,7 +172,7 @@ const Market = () => {
                     ? <div className="d-flex justify-content-center">All assortment</div>
                     : <div className="d-flex justify-content-center">{categoryName}</div>}
 
-                  {products && categoryName === 'Search Result'
+                  {products.length && categoryName === 'Search Result'
                     ? searchResult.map((item) => (
                       <article key={item._id}><ItemCard item={item} /></article>
                     ))
@@ -178,7 +189,7 @@ const Market = () => {
                     ))
                     : null}
 
-                  {!categoryName && products
+                  {!categoryName && products.length
                     ? products.map((item) => (
                       <article key={item._id}><ItemCard item={item} /></article>
                     ))
