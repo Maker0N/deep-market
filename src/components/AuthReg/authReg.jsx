@@ -81,7 +81,7 @@ const AuthReg = () => {
           })
         setTimeout(() => {
           history.push('/')
-        }, 4700)
+        }, 5200)
       })
     toast('You are logged in!')
   }

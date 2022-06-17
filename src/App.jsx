@@ -6,6 +6,7 @@ import Product from './components/Product/product'
 import Cart from './components/Cart/cart'
 import AuthReg from './components/AuthReg/authReg'
 import Admin from './components/Admin/admin'
+import './scss/custom.scss'
 
 const App = () => (
   <>

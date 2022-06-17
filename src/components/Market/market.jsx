@@ -9,8 +9,8 @@ import ItemCard from '../ItemCard/itemCard'
 import httpService from '../../services/http.service'
 
 const Market = () => {
-  const { isLogged } = useSelector((s) => s.authReducer)
   const history = useHistory()
+  const { isLogged } = useSelector((s) => s.authReducer)
   const [cropProductsCategory, setCropProdactsCategory] = useState([])
   const [search, setSearch] = useState('')
   const [searchResult, setSearchResult] = useState([])
@@ -94,7 +94,6 @@ const Market = () => {
     }
   }
 
-  // if (products) {
   return (
     <>
       {isLogged
@@ -131,7 +130,7 @@ const Market = () => {
                       <li key={item}>
                         <button
                           type="button"
-                          className="border-0 mb-1"
+                          className="border-0 mb-1 badge bg-info"
                           onClick={() => handleCategory(item)}
                         >
                           {item}
@@ -143,7 +142,7 @@ const Market = () => {
                 <div className="d-flex justify-content-center">
                   <button
                     type="button"
-                    className="border-0"
+                    className="border-0 badge bg-info"
                     onClick={() => handleAllAssortment()}
                   >
                     All assortment
@@ -151,17 +150,17 @@ const Market = () => {
                 </div>
               </nav>
               <div className="w-75">
-                <div className="bg-light ms-1">
+                <div className="d-flex justify-content-between bg-light ms-1">
                   <button
                     type="button"
-                    className="border-0"
+                    className="badge bg-info border-0"
                     onClick={() => handleSortUp()}
                   >
                     Sort by price down
                   </button>
                   <button
                     type="button"
-                    className="border-0"
+                    className="badge bg-info border-0"
                     onClick={() => handleSortDown()}
                   >
                     Sort by price up
