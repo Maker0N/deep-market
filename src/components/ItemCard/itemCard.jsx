@@ -1,15 +1,19 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Button from '../Button/button'
 import { addItemToCart } from '../../redux/cartReducer'
+import { updateUserCart } from '../../services/localStorage.service'
 
 const ItemCard = ({ item }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const { cart } = useSelector((s) => s.cartReducer)
+  useEffect(() => {
+    updateUserCart(cart)
+  }, [cart])
 
   const [cartItem] = cart.filter((it) => it._id === item._id)
 
@@ -70,7 +74,7 @@ const ItemCard = ({ item }) => {
                     <h5 className="card-title mt-2 ms-3">
                       |
                       {' '}
-                      <div className="badge bg-danger ms-2">{`${cartItem.quant} pcs.`}</div>
+                      <div className="badge bg-danger ms-2">{`${cartItem.count} pcs.`}</div>
                     </h5>
                   )
                   : (

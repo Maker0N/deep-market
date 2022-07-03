@@ -18,4 +18,9 @@ export const removeAuthData = () => {
   localStorage.removeItem(EXPIRES_KEY)
 }
 
+export const updateUserCart = (cart) => {
+  const user = localStorage.getItem(USERID_KEY)
+  localStorage.setItem(user, JSON.stringify(cart))
+}
+
 export default setTokens

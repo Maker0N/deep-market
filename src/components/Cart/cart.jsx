@@ -9,8 +9,8 @@ const Cart = () => {
   const history = useHistory()
   const { isLogged } = useSelector((s) => s.authReducer)
   const { cart } = useSelector((s) => s.cartReducer)
-  const cartTotalItems = cart.reduce((acc, rec) => acc + rec.quant, 0)
-  const cartTotalPrice = cart.reduce((acc, rec) => acc + ((rec.price * 100 * rec.quant) / 100), 0)
+  const cartTotalItems = cart.reduce((acc, rec) => acc + rec.count, 0)
+  const cartTotalPrice = cart.reduce((acc, rec) => acc + ((rec.price * 100 * rec.count) / 100), 0)
   return (
     <>
       {isLogged

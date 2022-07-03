@@ -7,6 +7,8 @@ import Input from '../Input/input'
 import Button from '../Button/button'
 import ItemCard from '../ItemCard/itemCard'
 import httpService from '../../services/http.service'
+// import { getCart } from '../../services/userCart.service'
+// import { updateUserCart } from '../../services/localStorage.service'
 
 const Market = () => {
   const history = useHistory()
@@ -23,17 +25,13 @@ const Market = () => {
 
   useEffect(async () => {
     const { data } = await httpService.get(productsEndPoint)
-    // .then((res) => {
-    //   console.log(res)
-    //   return res.data
-    // })
-    // .then((data) => {
-    setProducts(data)
-    const categoriesArr = data
-      .map((prod) => prod.category)
-      .reduce((acc, rec) => (acc.includes(rec) ? acc : [...acc, rec]), [])
-    setCategories(categoriesArr)
-    // })
+    if (data) {
+      setProducts(data)
+      const categoriesArr = data
+        .map((prod) => prod.category)
+        .reduce((acc, rec) => (acc.includes(rec) ? acc : [...acc, rec]), [])
+      setCategories(categoriesArr)
+    }
   }, [])
 
   // useEffect(() => {
