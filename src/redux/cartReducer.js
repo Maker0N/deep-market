@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
+const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
 const GET_CART_FROM_DB = 'GET_CART_FROM_DB'
 
 // const userId = localStorage.getItem('user-local-id')
@@ -21,8 +22,8 @@ const cartReducer = (state = initialState, action) => {
       delete item.created_at
       delete item.__v
       const cartItemQuant = 1
-      item.count = cartItemQuant
       if (!state.cart.length) {
+        // item.count = cartItemQuant
         return { ...state, cart: [...state.cart, { ...item, count: cartItemQuant }] }
       }
       let isIncludesItem = false
@@ -41,6 +42,18 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, cart: [...state.cart, { ...item, count: cartItemQuant }] }
     }
 
+    case REMOVE_ITEM_FROM_CART:
+    {
+      const item = action.payload
+      delete item.updatedAt
+      delete item.created_at
+      delete item.__v
+      const cartState = state.cart.map((it) => (it._id === item._id
+        ? { ...it, count: it.count <= 0 ? 0 : it.count - 1 }
+        : it))
+      return { ...state, cart: cartState }
+    }
+
     case GET_CART_FROM_DB:
       return { ...state, cart: action.payload }
 
@@ -51,6 +64,10 @@ const cartReducer = (state = initialState, action) => {
 
 export function addItemToCart(payload) {
   return { type: ADD_ITEM_TO_CART, payload }
+}
+
+export function removeItemFromCart(payload) {
+  return { type: REMOVE_ITEM_FROM_CART, payload }
 }
 
 export function getCartFromDb(payload) {

@@ -1,22 +1,23 @@
-import axios from 'axios'
-import config from '../config.json'
+import httpServise from './http.service'
 
-const httpCart = axios.create({
-  baseURL: `${config.apiEndPoint}/userCart`,
-})
+const cartEndPoint = '/userCart/'
 
-export const getCart = async (userId) => {
-  const { data } = await httpCart.get(`/${userId}`)
+export async function getCart(userId) {
+  if (!userId) {
+    const data = []
+    return data
+  }
+  const { data } = await httpServise.get(`${cartEndPoint}${userId}`)
   return data
 }
 
-const addCart = async (userCart) => {
+async function addCart(userCart) {
   const user = localStorage.getItem('user-local-id')
   const userCartDb = {
     userCart,
     user,
   }
-  const { data } = await httpCart.post('/', { userCartDb })
+  const { data } = await httpServise.post(cartEndPoint, { userCartDb })
   return data
 }
 

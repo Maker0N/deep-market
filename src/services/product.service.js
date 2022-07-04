@@ -1,13 +1,10 @@
-import axios from 'axios'
-import config from '../config.json'
+import httpServise from './http.service'
 
-const httpCart = axios.create({
-  baseURL: `${config.apiEndPoint}/products/`,
-})
+const productsEndPoint = '/products'
 
-async function addItem(itemId) {
-  const { item } = await httpCart.get(`${itemId}`)
-  return item
+async function getProducts() {
+  const { data } = await httpServise.get(productsEndPoint)
+  return data
 }
 
-export default addItem
+export default getProducts

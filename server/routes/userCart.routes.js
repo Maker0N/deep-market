@@ -1,10 +1,10 @@
 const express = require('express')
 const UserCart = require('../models/UserCart')
-// const auth = require('../middleware/auth.middleware')
+const auth = require('../middleware/auth.middleware')
 
 const router = express.Router({ mergeParams: true })
 
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', auth, async (req, res) => {
   try {
     const { userId } = req.params
     const userCart = await UserCart.find({ user: userId })

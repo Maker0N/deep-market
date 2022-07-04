@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import Input from '../Input/input'
 import Button from '../Button/button'
 import ItemCard from '../ItemCard/itemCard'
-import httpService from '../../services/http.service'
+import getProducts from '../../services/product.service'
 // import { getCart } from '../../services/userCart.service'
 // import { updateUserCart } from '../../services/localStorage.service'
 
@@ -21,10 +21,8 @@ const Market = () => {
   const [categories, setCategories] = useState([])
   const [categoryName, setCategoryName] = useState('')
 
-  const productsEndPoint = '/products'
-
   useEffect(async () => {
-    const { data } = await httpService.get(productsEndPoint)
+    const data = await getProducts()
     if (data) {
       setProducts(data)
       const categoriesArr = data

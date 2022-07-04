@@ -16,7 +16,7 @@ const Header = () => {
   } = useSelector((s) => s.authReducer)
   const { cart } = useSelector((s) => s.cartReducer)
   let cartTotalItems
-  if (cart.length) {
+  if (cart.length && isLogged) {
     cartTotalItems = cart.reduce((acc, rec) => acc + rec.count, 0)
   }
 

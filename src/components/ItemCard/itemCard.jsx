@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import Button from '../Button/button'
-import { addItemToCart } from '../../redux/cartReducer'
+import { addItemToCart, removeItemFromCart } from '../../redux/cartReducer'
 import { updateUserCart } from '../../services/localStorage.service'
 
 const ItemCard = ({ item }) => {
@@ -19,6 +19,10 @@ const ItemCard = ({ item }) => {
 
   const handleBuyItem = () => {
     dispatch(addItemToCart(item))
+  }
+
+  const handleRemoveItem = () => {
+    dispatch(removeItemFromCart(item))
   }
 
   return (
@@ -54,7 +58,7 @@ const ItemCard = ({ item }) => {
                   {' | '}
                   Count:
                   {' '}
-                  {item.count}
+                  {item.rating.count}
                 </small>
               </div>
               )}
@@ -74,20 +78,38 @@ const ItemCard = ({ item }) => {
                     <h5 className="card-title mt-2 ms-3">
                       |
                       {' '}
-                      <div className="badge bg-danger ms-2">{`${cartItem.count} pcs.`}</div>
+                      <div className="badge bg-danger mx-2">{`${cartItem.count} pcs.`}</div>
                     </h5>
                   )
                   : (
                     <h5 className="card-title mt-2 ms-3">
                       |
                       {' '}
-                      <div className="badge bg-danger ms-2">0 pcs.</div>
+                      <div className="badge bg-danger mx-2">0 pcs.</div>
                     </h5>
                   )}
+                {location.pathname === '/cart'
+                && (
+                  <>
+                    <Button
+                      buttonClass="btn btn-primary mx-1"
+                      buttonName="-"
+                      buttonAction={handleRemoveItem}
+                    />
+                    <Button
+                      buttonClass="btn btn-primary"
+                      buttonName="+"
+                      buttonAction={handleBuyItem}
+                    />
+                  </>
+                )}
               </div>
-              <Link to={location.pathname === `/product/${item._id}` ? '/' : `/product/${item._id}`}>
+              <Link
+                className="btn btn-primary p-0 d-flex justify-content-center"
+                to={location.pathname === `/product/${item._id}` ? '/' : `/product/${item._id}`}
+              >
                 <Button
-                  buttonClass="btn btn-primary"
+                  buttonClass="btn btn-primary px-15 py-0"
                   buttonName={location.pathname === `/product/${item._id}` ? 'Back' : 'See product'}
                   buttonAction={() => {}}
                 />
